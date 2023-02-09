@@ -1,1 +1,22 @@
-
+{
+  "name": "czarnojan-api",
+  "version": "1.0.0",
+  "description": "czarnojan-api made in nodejs with express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "czarnojan-api"
+  },
+  "keywords": [
+    "czarnojan",
+    "mateusz",
+    "czarneusz",
+    "matojan"
+  ],
+  "author": "pabloscyzoryk",
+  "license": "ISC"
+}

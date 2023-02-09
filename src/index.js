@@ -22,7 +22,7 @@ app.get('/api/:api', (req, res) => {
         res.redirect('/');
     }
 
-    fs.readFile('./src/assets/czarnojan.png', (err, data) => {
+    fs.readFile('./assets/czarnojan.png', (err, data) => {
         if (err) {
             res.send('error :(');
             console.log(err);
@@ -49,7 +49,7 @@ app.get('/api/:api', (req, res) => {
 app.get('/', (req, res) => {
     res.send(
         `<h1>Czarnojan API</h1>
-     <p><b>Example usage: </b>www.czarnojan-api.com/api/1080x768</p><br><br>
+     <p><b>Example usage: </b>https://czarnojan-api.cyclic.app/api/1080x768</p><br><br>
      <h2>More funny shit with Czarnojan: </h2><br>
      <a href="https://czarnojan.netlify.app">Czarnojan</a><br>
      <a href="https://czarnojan2.netlify.app">Czarnojan 2</a><br>

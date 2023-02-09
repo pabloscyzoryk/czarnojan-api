@@ -1,1 +1,8 @@
-console.log('czarnojan up and running');
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+app.get('/', (req, res) => {
+    res.send('<p>Czarnojan API</p>')
+})

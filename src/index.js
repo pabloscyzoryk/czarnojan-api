@@ -5,30 +5,62 @@ const fs = require('fs');
 
 app.use(express.json());
 
-app.get('/api/:dimensions', (req, res) => {
-    const dimensions = req.params.dimensions.split('x');
+app.get('/api/:api', (req, res) => {
+    if (!req.params.api.includes('x') || !req.params.api.length > 3) {
+        res.redirect('/');
+    }
+
+    const dimensions = req.params.api.split('x');
     const width = parseInt(dimensions[0], 10);
     const height = parseInt(dimensions[1], 10);
 
-    fs.readFile('./assets/czarnojan.png', async (data, err) => {
+    if (isNaN(width) || isNaN(height)) {
+        res.redirect('/');
+    }
+
+    if (width.length === 0 || height.length === 0) {
+        res.redirect('/');
+    }
+
+    fs.readFile('./src/assets/czarnojan.png', (err, data) => {
         if (err) {
             res.send('error :(');
+            console.log(err);
+        } else {
+            try {
+                sharp(data)
+                    .resize(width, height)
+                    .toBuffer()
+                    .then((resizedImage) => {
+                        res.set('Content-Type', 'image/jpeg');
+                        res.send(resizedImage);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+            catch (err) {
+                res.send('Something went wrong. Please check your request and try again');
+            }
         }
-
-        else {
-            const resizedImage = await sharp(data)
-                .resize(width, height)
-                .toBuffer();
-
-            res.set('Content-Type', 'image/jpeg');
-            res.send(resizedImage);
-        }
-    })
-})
+    });
+});
 
 app.get('/', (req, res) => {
-    res.send('<p>Czarnojan API</p>');
-})
+    res.send(
+        `<h1>Czarnojan API</h1>
+     <p><b>Example usage: </b>www.czarnojan-api.com/api/1080x768</p><br><br>
+     <h2>More funny shit with Czarnojan: </h2><br>
+     <a href="https://czarnojan.netlify.app">Czarnojan</a><br>
+     <a href="https://czarnojan2.netlify.app">Czarnojan 2</a><br>
+     <a href="https://czarnojan-clicker.netlify.app">Czarnojan Clicker</a><br>
+     <a href="https://czarnojan3d.netlify.app">Czarnojan 3D</a><br>`
+    )
+});
+
+app.get('*', (req, res) => {
+    res.redirect('/');
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

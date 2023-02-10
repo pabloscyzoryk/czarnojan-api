@@ -22,7 +22,7 @@ app.get('/api/:api', (req, res) => {
         res.redirect('/');
     }
 
-    fs.readFile('./assets/czarnojan.png', (err, data) => {
+    fs.readFile('./src/assets/czarnojan.png', (err, data) => {
         if (err) {
             res.send('error :(');
             console.log(err);
